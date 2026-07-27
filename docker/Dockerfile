@@ -74,7 +74,7 @@ WORKDIR /app
 COPY . .
 
 RUN npm install && \
-    npm build && \
+    npm run build && \
     rm -rf node_modules
 
 

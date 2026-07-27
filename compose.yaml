@@ -33,8 +33,8 @@ services:
       - ./:/var/www/html
     command: sh -c "npm install && npm run watch"
     tty: true
-    
-    
+
+
   db:
     image: mariadb:10.11.11
     environment:
@@ -48,7 +48,7 @@ services:
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     environment:
-      PMA_HOST: mariadb
+      PMA_HOST: db
       PMA_PORT: 3306
       PMA_USER: root
       PMA_PASSWORD: root

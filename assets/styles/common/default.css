@@ -1,0 +1,8 @@
+.bg-blur {
+    backdrop-filter: blur(20px);
+}
+
+.avatar-sm {
+    height: 2.5rem;
+    width: 2.5rem;
+}
