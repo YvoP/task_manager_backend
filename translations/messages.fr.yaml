@@ -1,0 +1,15 @@
+navbar:
+    tasks: 'Tâches'
+    meetings: 'Réunions'
+    timeline: 'Chronologie'
+
+sidebar:
+    projects: 'Projets'
+    chats: 'Conversations'
+
+task:
+    status:
+        TODO: 'Todo'
+        IN_PROGRESS: 'En cours'
+        DONE: 'Terminées'
+
