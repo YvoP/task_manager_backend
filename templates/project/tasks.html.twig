@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello HomeController!{% endblock %}
+
+{% block body %}
+    <div class="row">
+        {% for status in statuses %}
+            <div class="col-lg-4 text-center">
+                <h2>{{ ('task.status.' ~ status) | trans }}</h2>
+                {% for task in tasks %}
+                    {% if task.status === status %}
+                        {% include 'partials/_taskCard.html.twig' with {'task': task } %}
+                    {% endif %}
+                {% endfor %}
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

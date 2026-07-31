@@ -1,0 +1,22 @@
+:root {
+    --bs-body-bg: #fafcff;
+    --bs-body-font-family: Inter;
+    --bs-emphasis-color-rgb: rgb(50 53 71);
+
+    --bs-body-color-rgb: rgb(255 255 255);
+
+    --shadow-color: rgb(134 153 182 / 0.25);
+    --bs-box-shadow: 2px 2px 20px 0px var(--shadow-color);
+}
+
+.navbar {
+    --bs-navbar-padding-y: 1rem;
+}
+
+.fw-bold {
+    font-weight: 600 !important;
+}
+
+.card {
+    --bs-card-cap-bg: rgba(var(--bs-body-color-rgb), 0.0);
+}

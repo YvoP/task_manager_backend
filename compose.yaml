@@ -23,7 +23,7 @@ services:
       - php
 
   node:
-    image: node:22
+    image: node:26
     build:
       context: .
       dockerfile: docker/Dockerfile

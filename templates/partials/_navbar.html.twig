@@ -1,0 +1,23 @@
+<nav class="navbar navbar-expand-lg shadow">
+    <div class="container-fluid">
+        <div class="col col-lg-3 col-xl-2 text-center"><a class="navbar-brand fs-1 text-decoration-none fw-bold" href="{{ path('app_home') }}">Relay</a></div>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="#">{{ 'navbar.tasks' | trans }}</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">{{ 'navbar.meetings' | trans }}</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">{{ 'navbar.timeline' | trans }}</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>

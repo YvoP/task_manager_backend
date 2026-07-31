@@ -11,6 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: TaskContentRepository::class)]
 class TaskContent
 {
+    const STATUSES = ['TODO', 'IN_PROGRESS', 'DONE'];
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]

@@ -1,0 +1,18 @@
+<div class="col my-4 text-start">
+    <div class="card border-0 shadow">
+        <a class="text-decoration-none text-dark" data-bs-toggle="collapse" href="#collapse{{ task.id }}" role="button" aria-expanded="false"
+           aria-controls="collapseExample">
+            <div class="card-header border-0">
+                <p class="fs-4 m-0">{{ task.title }}</p>
+                <i class="fa-solid fa-caret-down"></i>
+            </div>
+        </a>
+        <div class="collapse" id="collapse{{ task.id }}">
+            <div class="card-body">
+                <h5 class="card-title">Special title treatment</h5>
+                <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                <a href="#" class="btn btn-primary">Go somewhere</a>
+            </div>
+        </div>
+    </div>
+</div>
