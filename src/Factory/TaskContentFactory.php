@@ -91,13 +91,13 @@ final class TaskContentFactory extends PersistentObjectFactory
 
             // 1 = low, 4 = critical
             'priority' => self::faker()->randomElement([
-                2,
-                2,
-                2,
-                3,
-                3,
+                0,
+                0,
                 1,
-                4,
+                1,
+                1,
+                2,
+                3,
             ]),
 
             'startDate' => self::faker()->optional(0.8)

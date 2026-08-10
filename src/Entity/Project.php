@@ -2,11 +2,29 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Patch;
+use ApiPlatform\Metadata\Post;
+use App\Dto\AddProjectUserDto;
 use App\Repository\ProjectRepository;
+use App\State\AddProjectUserProcessor;
+use App\State\UserProjectsProvider;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
+#[ApiResource(
+    operations: [new GetCollection(
+        uriTemplate: '/users/{id}/projects',
+        provider: UserProjectsProvider::class,
+    ),
+        new Post(
+            uriTemplate: '/project/{id}/user',
+            input: AddProjectUserDto::class,
+            processor: AddProjectUserProcessor::class,
+        )]
+)]
 #[ORM\Entity(repositoryClass: ProjectRepository::class)]
 class Project
 {
@@ -39,9 +57,6 @@ class Project
     #[ORM\OneToMany(targetEntity: ProjectUser::class, mappedBy: 'project')]
     private Collection $projectUsers;
 
-    #[ORM\OneToOne(mappedBy: 'project', cascade: ['persist', 'remove'])]
-    private ?Chat $chat = null;
-
     /**
      * @var Collection<int, Task>
      */
@@ -54,11 +69,18 @@ class Project
     #[ORM\OneToMany(targetEntity: Meeting::class, mappedBy: 'project')]
     private Collection $meetings;
 
+    /**
+     * @var Collection<int, Chat>
+     */
+    #[ORM\OneToMany(targetEntity: Chat::class, mappedBy: 'project')]
+    private Collection $chats;
+
     public function __construct()
     {
         $this->projectUsers = new ArrayCollection();
         $this->tasks = new ArrayCollection();
         $this->meetings = new ArrayCollection();
+        $this->chats = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -168,28 +190,6 @@ class Project
         return $this;
     }
 
-    public function getChat(): ?Chat
-    {
-        return $this->chat;
-    }
-
-    public function setChat(?Chat $chat): static
-    {
-        // unset the owning side of the relation if necessary
-        if ($chat === null && $this->chat !== null) {
-            $this->chat->setProject(null);
-        }
-
-        // set the owning side of the relation if necessary
-        if ($chat !== null && $chat->getProject() !== $this) {
-            $chat->setProject($this);
-        }
-
-        $this->chat = $chat;
-
-        return $this;
-    }
-
     /**
      * @return Collection<int, Task>
      */
@@ -244,6 +244,36 @@ class Project
             // set the owning side to null (unless already changed)
             if ($meeting->getProject() === $this) {
                 $meeting->setProject(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Chat>
+     */
+    public function getChats(): Collection
+    {
+        return $this->chats;
+    }
+
+    public function addChat(Chat $chat): static
+    {
+        if (!$this->chats->contains($chat)) {
+            $this->chats->add($chat);
+            $chat->setProject($this);
+        }
+
+        return $this;
+    }
+
+    public function removeChat(Chat $chat): static
+    {
+        if ($this->chats->removeElement($chat)) {
+            // set the owning side to null (unless already changed)
+            if ($chat->getProject() === $this) {
+                $chat->setProject(null);
             }
         }
 

@@ -23,6 +23,15 @@ Encore
     .addEntry('scripts', './assets/scripts/app.js')
     .addEntry('styles', './assets/styles/app.css')
 
+    .copyFiles({
+        from: './assets/images/profilePictures',
+        to: 'images/profilePictures/[path][name].[ext]'
+    })
+    .copyFiles({
+        from: './assets/fonts',
+        to: 'fonts/[path][name].[ext]'
+    })
+
     // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
     .splitEntryChunks()
 

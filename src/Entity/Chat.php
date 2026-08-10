@@ -24,9 +24,6 @@ class Chat
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
 
-    #[ORM\OneToOne(inversedBy: 'chat', cascade: ['persist', 'remove'])]
-    private ?Project $project = null;
-
     /**
      * @var Collection<int, Message>
      */
@@ -38,6 +35,10 @@ class Chat
      */
     #[ORM\ManyToMany(targetEntity: ProjectUser::class, inversedBy: 'chats')]
     private Collection $projectUsers;
+
+    #[ORM\ManyToOne(inversedBy: 'chats')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Project $project = null;
 
     public function __construct()
     {
@@ -82,18 +83,6 @@ class Chat
     public function setCreatedAt(\DateTimeImmutable $createdAt): static
     {
         $this->createdAt = $createdAt;
-
-        return $this;
-    }
-
-    public function getProject(): ?Project
-    {
-        return $this->project;
-    }
-
-    public function setProject(?Project $project): static
-    {
-        $this->project = $project;
 
         return $this;
     }
@@ -148,6 +137,18 @@ class Chat
     public function removeProjectUser(ProjectUser $projectUser): static
     {
         $this->projectUsers->removeElement($projectUser);
+
+        return $this;
+    }
+
+    public function getProject(): ?Project
+    {
+        return $this->project;
+    }
+
+    public function setProject(?Project $project): static
+    {
+        $this->project = $project;
 
         return $this;
     }

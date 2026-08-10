@@ -1,17 +1,58 @@
-<div class="col my-4 text-start">
+<div class="col my-4 text-start sortable-item" data-task-id="{{ task.id }}">
     <div class="card border-0 shadow">
-        <a class="text-decoration-none text-dark" data-bs-toggle="collapse" href="#collapse{{ task.id }}" role="button" aria-expanded="false"
-           aria-controls="collapseExample">
+        <a class="text-decoration-none text-body" data-bs-toggle="collapse" href=".collapse{{ task.id }}" role="button"
+           aria-expanded="false"
+           aria-controls="collapse{{ task.id }}">
             <div class="card-header border-0">
-                <p class="fs-4 m-0">{{ task.title }}</p>
-                <i class="fa-solid fa-caret-down"></i>
+                <div class="row">
+                    <div class="d-flex justify-content-between">
+                        <div class="me-auto">
+                            <div class="row">
+                                <div data-bs-toggle="closed"
+                                     class="ms-2 priority-level-{{ task.currentContent.priority }} rounded"></div>
+                                <div data-bs-toggle="open"
+                                     class="ms-2 priority-level-{{ task.currentContent.priority }} rounded-1 collapse collapse{{ task.id }}">{{ ('card.priority.' ~ task.currentContent.priority) | trans({}, 'tasks') }}
+                                </div>
+                            </div>
+                            <p class="fs-4 fw-medium my-2">{{ task.currentContent.title }}</p>
+                        </div>
+
+                        <div class="align-content-center ms-auto">
+                            <i data-bs-toggle="closed" class="fa-solid fa-caret-down fa-2xl"></i>
+                            <i data-bs-toggle="open" class="fa-solid fa-caret-up fa-2xl"></i>
+                        </div>
+                    </div>
+                </div>
             </div>
+            {% if task.currentContent.attributedTo is not null %}
+                <div data-bs-toggle="closed" class="position-absolute top-100 start-25 translate-middle badge">
+                    <img src="{{ asset(task.currentContent.attributedTo.user.profileImage) }}" alt=""
+                         class="avatar-sm rounded-circle">
+                </div>
+            {% endif %}
         </a>
-        <div class="collapse" id="collapse{{ task.id }}">
+        <div class="collapse collapse{{ task.id }}" id="">
             <div class="card-body">
-                <h5 class="card-title">Special title treatment</h5>
-                <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                <a href="#" class="btn btn-primary">Go somewhere</a>
+                <p class="card-text"
+                   data-placeholder="{{ 'card.empty_description' | trans({}, 'tasks') }}">{{ task.currentContent.description }}</p>
+                <div class="row">
+                    <div class="col-auto mt-auto">
+                        {% if task.currentContent.attributedTo is not null %}
+                            <img src="{{ asset(task.currentContent.attributedTo.user.profileImage) }}" alt=""
+                                 class="img-fluid avatar-md rounded-circle">
+                        {% endif %}
+                    </div>
+                    <div class="col d-flex flex-column align-items-end justify-content-end">
+                        <p class="mb-0 fs-7">
+                            <a class="text-decoration-none" href="#">{{ 'button.history' | trans({}, 'tasks') }}</a>
+                            -
+                            <a class="text-decoration-none" href="{{ path('app_project_edit_task', {id: task.project.id, taskId: task.id}) }}">{{ 'button.edit' | trans({}, 'tasks') }}</a></p>
+                        {% if task.currentContent.deadline is not null %}
+                            <p class="mb-0 fs-7 fw-light">Due le {{ task.currentContent.deadline | format_date }}
+                                - {{ task.currentContent.deadline | time_diff }} </p>
+                        {% endif %}
+                    </div>
+                </div>
             </div>
         </div>
     </div>

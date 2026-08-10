@@ -22,12 +22,12 @@
 </head>
 <body class="d-flex flex-column min-vh-100">
 {% include 'partials/_navbar.html.twig' %}
-<div class="row flex-grow-1">
+<div class="row flex-grow-1 d-flex">
     {% if user | default %}
         {% include 'partials/_sidebar.html.twig' %}
     {% endif %}
     <div class="col">
-        <div class="container my-3">
+        <div class="container-fluid my-3 px-0">
         {% block body %}{% endblock %}
         </div>
     </div>

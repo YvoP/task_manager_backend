@@ -17,7 +17,7 @@ class ProjectUserRepository extends ServiceEntityRepository
     }
 
     //    /**
-    //     * @return ProjectUser[] Returns an array of ProjectUser objects
+    //     * @return AddProjectUserProcessor[] Returns an array of AddProjectUserProcessor objects
     //     */
     //    public function findByExampleField($value): array
     //    {
@@ -31,7 +31,7 @@ class ProjectUserRepository extends ServiceEntityRepository
     //        ;
     //    }
 
-    //    public function findOneBySomeField($value): ?ProjectUser
+    //    public function findOneBySomeField($value): ?AddProjectUserProcessor
     //    {
     //        return $this->createQueryBuilder('p')
     //            ->andWhere('p.exampleField = :val')
@@ -40,4 +40,18 @@ class ProjectUserRepository extends ServiceEntityRepository
     //            ->getOneOrNullResult()
     //        ;
     //    }
+    public function findUnstartedChats(int $projectId, int $userId)
+    {
+        return $this->createQueryBuilder('pu')
+            ->leftJoin('pu.chats', 'c')
+            ->andWhere('pu.project = :project')
+            ->andWhere('pu.user != :user')
+            ->andWhere('c.id IS NULL')
+            ->setParameter('project', $projectId)
+            ->setParameter('user', $userId)
+            ->getQuery()
+            ->getResult();
+    }
+
+
 }

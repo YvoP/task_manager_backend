@@ -40,4 +40,17 @@ class ChatRepository extends ServiceEntityRepository
     //            ->getOneOrNullResult()
     //        ;
     //    }
+    public function findByProjectAndUser(int $projectId, int $userId): array
+    {
+        return $this->createQueryBuilder('c')
+            ->select('c')
+            ->leftJoin('c.projectUsers', 'pu')
+            ->leftJoin('pu.user', 'u')
+            ->where('c.project = :projectId')
+            ->andWhere('(u = :userId OR pu.id IS NULL)')
+            ->setParameter('projectId', $projectId)
+            ->setParameter('userId', $userId)
+            ->getQuery()
+            ->getResult();
+    }
 }

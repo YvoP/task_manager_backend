@@ -35,13 +35,17 @@ class AppFixtures extends Fixture
             'createdAt' => new \DateTimeImmutable(),
         ]);
 
-        $users = UserFactory::createMany(30);
+        echo 'Creating Users';
+
+        $users = UserFactory::createMany(15);
 
         /*
          * ------------------------------------------------------------------
          * Projects
          * ------------------------------------------------------------------
          */
+
+        echo 'Creating Pprojects';
 
         $projects = ProjectFactory::createMany(12);
 
@@ -52,6 +56,8 @@ class AppFixtures extends Fixture
              * Team
              * --------------------------------------------------------------
              */
+
+            echo 'Creating Teams';
 
             $team = [];
 
@@ -72,6 +78,8 @@ class AppFixtures extends Fixture
              * --------------------------------------------------------------
              */
 
+            echo 'Creating Chats';
+
             $chat = ChatFactory::createOne([
                 'project' => $project,
             ]);
@@ -81,6 +89,8 @@ class AppFixtures extends Fixture
              * Messages
              * --------------------------------------------------------------
              */
+
+            echo 'Creating Messages';
 
             $currentDate = $faker->dateTimeBetween('-6 months');
 
@@ -103,6 +113,8 @@ class AppFixtures extends Fixture
              * Meetings
              * --------------------------------------------------------------
              */
+
+            echo 'Creating Meetings';
 
             $meetings = [];
 
@@ -127,6 +139,8 @@ class AppFixtures extends Fixture
              * Tasks
              * --------------------------------------------------------------
              */
+
+            echo 'Creating Tasks';
 
             foreach (range(1, $faker->numberBetween(15, 30)) as $i) {
 
@@ -154,6 +168,8 @@ class AppFixtures extends Fixture
 
                 $updatedAt = $task->getCreatedAt()->modify('+1 hour');
 
+                $currentContent = null;
+
                 for ($h = 0; $h < $historyLength; $h++) {
 
                     $content = TaskContentFactory::createOne([
@@ -167,7 +183,6 @@ class AppFixtures extends Fixture
                     /*
                      * Attach files
                      */
-
                     foreach (range(1, $faker->numberBetween(0, 2)) as $j) {
 
                         if ($faker->boolean(40)) {
@@ -180,12 +195,18 @@ class AppFixtures extends Fixture
                         }
                     }
 
+                    // Keep the newest content as current
+                    $currentContent = $content;
+
                     $modifier = $faker->randomElement($team);
 
                     $updatedAt = $updatedAt->modify(
                         '+' . $faker->numberBetween(1, 15) . ' days'
                     );
                 }
+
+                // Set the current version
+                $task->setCurrentContent($currentContent);
             }
         }
 

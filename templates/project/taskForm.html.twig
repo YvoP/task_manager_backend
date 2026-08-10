@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% form_theme form 'bootstrap_5_layout.html.twig' %}
+
+    {% block title %}
+        {% if task is not null %}{{ 'title.edit' | trans([], 'tasks') }}
+        {% else %}{{ 'title.add' | trans([], 'tasks') }}
+        {% endif %}
+    {% endblock %}
+
+
+{% block body %}
+    <div class="container py-4">
+        <div class="col-6 offset-2">
+            {{ form_start(form) }}
+            {{ form_row(form) }}
+            <div class="d-flex justify-content-center">
+                <button class="btn btn-primary" type="submit">
+                    {{ 'button.confirm' | trans }}
+                </button>
+            </div>
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}

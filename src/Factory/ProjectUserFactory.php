@@ -48,7 +48,7 @@ final class ProjectUserFactory extends PersistentObjectFactory
     protected function initialize(): static
     {
         return $this
-            // ->afterInstantiate(function(ProjectUser $projectUser): void {})
+            // ->afterInstantiate(function(AddProjectUserProcessor $projectUser): void {})
         ;
     }
 }

@@ -2,13 +2,16 @@ navbar:
     tasks: 'Tasks'
     meetings: 'Meetings'
     timeline: 'Timeline'
+    dashboard: 'Dashboard'
+    logout: 'Logout'
 
 sidebar:
     projects: 'Projects'
     chats: 'Chats'
 
-task:
-    status:
-        TODO: 'Todo'
-        IN_PROGRESS: 'In Progress'
-        DONE: 'Done'
+button:
+    confirm: 'Confirm'
+    cancel: 'Cancel'
+
+alert:
+    error: 'An error happened'

@@ -2,11 +2,28 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Patch;
+use ApiPlatform\Metadata\Post;
+use App\Dto\UpdateTaskDto;
 use App\Repository\TaskRepository;
+use App\State\CreateTaskRevisionProcessor;
+use App\State\UserProjectsProvider;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
+#[ApiResource(
+    operations: [
+        new Post(
+            uriTemplate: 'tasks/{id}/revision',
+            input: UpdateTaskDto::class,
+            processor: CreateTaskRevisionProcessor::class,
+        ),
+    ]
+)]
 #[ORM\Entity(repositoryClass: TaskRepository::class)]
 class Task
 {
@@ -34,6 +51,10 @@ class Task
      */
     #[ORM\OneToMany(targetEntity: TaskContent::class, mappedBy: 'task')]
     private Collection $taskHistory;
+
+    #[ORM\ManyToOne]
+    #[ORM\JoinColumn(nullable: true)]
+    private ?TaskContent $currentContent = null;
 
     public function __construct()
     {
@@ -119,6 +140,18 @@ class Task
                 $taskHistory->setTask(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCurrentContent(): ?TaskContent
+    {
+        return $this->currentContent;
+    }
+
+    public function setCurrentContent(?TaskContent $currentContent): static
+    {
+        $this->currentContent = $currentContent;
 
         return $this;
     }

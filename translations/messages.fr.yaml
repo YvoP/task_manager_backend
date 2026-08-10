@@ -2,14 +2,12 @@ navbar:
     tasks: 'Tâches'
     meetings: 'Réunions'
     timeline: 'Chronologie'
+    dashboard: 'Panneau de configuration'
+    logout: 'Se déconnecter'
 
 sidebar:
     projects: 'Projets'
     chats: 'Conversations'
 
-task:
-    status:
-        TODO: 'Todo'
-        IN_PROGRESS: 'En cours'
-        DONE: 'Terminées'
-
+button:
+    confirm: 'Valider'

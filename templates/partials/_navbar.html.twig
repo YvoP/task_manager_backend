@@ -1,13 +1,14 @@
-<nav class="navbar navbar-expand-lg shadow">
+<nav class="navbar navbar-expand-lg shadow-sm">
     <div class="container-fluid">
-        <div class="col col-lg-3 col-xl-2 text-center"><a class="navbar-brand fs-1 text-decoration-none fw-bold" href="{{ path('app_home') }}">Relay</a></div>
+        <div class="col col-lg-3 col-xl-2 text-center"><a class="navbar-brand fs-1 text-decoration-none fw-bold"
+                                                          href="{{ path('app_home') }}">Relay</a></div>
 
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
+            <ul class="navbar-nav me-auto">
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="#">{{ 'navbar.tasks' | trans }}</a>
                 </li>
@@ -18,6 +19,17 @@
                     <a class="nav-link" href="#">{{ 'navbar.timeline' | trans }}</a>
                 </li>
             </ul>
+            {% if app.user is null %}
+                Connection
+            {% else %}
+                <div class="me-3 dropdown">
+                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#"><img class="img-fluid avatar-md rounded-circle" src="{{ asset(app.user.profileImage) }}" alt=""></a>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><a class="dropdown-item" href="#">{{ 'navbar.dashboard' | trans }}</a></li>
+                        <li><a class="dropdown-item" href="{{ path('app_logout') }}">{{ 'navbar.logout' | trans }}</a></li>
+                    </ul>
+                </div>
+            {% endif %}
         </div>
     </div>
 </nav>

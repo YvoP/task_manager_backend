@@ -1,0 +1,32 @@
+status:
+    TODO: 'Todo'
+    IN_PROGRESS: 'En cours'
+    DONE: 'Terminées'
+
+card:
+    priority:
+        0: 'Priorité basse'
+        1: 'Priorité moyenne'
+        2: 'Priorité haute'
+        3: 'Priorité critique'
+    empty_description: "Il n'y a pas de description pour cette tâche"
+
+relative_date:
+    days_later: 'dans %count% jours'
+    months_later: 'dans %count% mois'
+    years_later: 'dans %count% ans'
+    day_later: 'dans %count% jour'
+    month_later: 'dans %count% mois'
+    year_later: 'dans %count% an'
+    days_ago: 'il y a %count% jours'
+    months_ago: 'il y a %count% mois'
+    years_ago: 'il y a %count% ans'
+    day_ago: 'il y a %count% jour'
+    month_ago: 'il y a %count% mois'
+    year_ago: 'il y a %count% an'
+    today: "aujourd'hui"
+
+button:
+    new_task: 'Nouvelle tâche'
+    history: 'Historique'
+    edit: 'Éditer'

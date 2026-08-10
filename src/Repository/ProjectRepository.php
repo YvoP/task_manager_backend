@@ -18,13 +18,13 @@ class ProjectRepository extends ServiceEntityRepository
     }
 
 
-    public function findByUser(User $user): array
+    public function findByUser(int $user): array
     {
         return $this->createQueryBuilder('p')
             ->select('p')
             ->join('p.projectUsers', 'pu')
-            ->where('pu IN (:projectUsers)')
-            ->setParameter('projectUsers', $user->getProjectUsers())
+            ->where('pu.user = :user')
+            ->setParameter('user', $user)
             ->orderBy('p.id', 'ASC')
             ->getQuery()
             ->getResult()
