@@ -15,14 +15,4 @@ class TaskContentRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, TaskContent::class);
     }
-
-    //    public function findOneBySomeField($value): ?TaskContent
-    //    {
-    //        return $this->createQueryBuilder('t')
-    //            ->andWhere('t.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
 }

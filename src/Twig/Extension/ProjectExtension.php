@@ -25,6 +25,7 @@ class ProjectExtension extends AbstractExtension
             new TwigFunction('get_projects', [ProjectExtensionRuntime::class, 'getProjects']),
             new TwigFunction('get_chats', [ProjectExtensionRuntime::class, 'getChats']),
             new TwigFunction('get_unstarted_chats', [ProjectExtensionRuntime::class, 'getUnstartedChats']),
+            new TwigFunction('is_admin', [ProjectExtensionRuntime::class, 'isAdmin']),
         ];
     }
 }

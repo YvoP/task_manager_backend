@@ -1,0 +1,28 @@
+{% if project is defined and project is not null %}
+    <div class="modal fade" id="addProjectUserModal" tabindex="-1" aria-labelledby="addProjectUserModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="addProjectUserModalLabel">Add a team member
+                        to {{ project.name }}</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form name="addTeamMemberForm">
+                        <input type="text" name="username" id="usernameToAdd" placeholder="Username"
+                               class="form-control" data-project-id="{{ project.id }}">
+                        <div id="usernameToAddFeedback" class="invalid-feedback">
+                            Please choose a username.
+                        </div>
+                        <div class="mt-4">
+                            <button type="button" class="btn btn-secondary"
+                                    data-bs-dismiss="modal">{{ 'button.cancel' | trans }}</button>
+                            <button type="submit" class="btn btn-primary">{{ 'button.confirm' | trans }}</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endif %}

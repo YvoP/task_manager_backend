@@ -14,21 +14,23 @@
             <a class="text-decoration-none text-body" href="#">
                 <i class="fa-solid fa-filter fa-2xl"></i>
             </a>
-            <a class="btn btn-primary fw-bold py-2" href="{{ path('app_project_new_task', {id: project.id}) }}">{{ 'button.new_task' | trans({}, 'tasks') }} <i class="fa-solid fa-plus"></i></a>
+            <a class="btn btn-primary fw-bold py-2"
+               href="{{ path('app_project_new_task', {id: project.id}) }}">{{ 'button.new_task' | trans({}, 'tasks') }}
+                <i class="fa-solid fa-plus"></i></a>
         </div>
     </div>
     <div class="row px-5">
         {% for status in statuses %}
             <div class="col-lg-4">
                 <div class="col sticky-top bg-blur">
-                    <p class="mt-3 px-4 fs-1 fw-bold">{{ ('status.' ~ status) | trans({}, 'tasks')  }}</p>
+                    <p class="mt-3 px-4 fs-1 fw-bold">{{ ('status.' ~ status) | trans({}, 'tasks') }}</p>
                 </div>
-                <div class="col px-4 sortable-col h-100"  data-status="{{ status }}">
-                {% for task in tasks %}
-                    {% if task.currentContent.status === status %}
-                        {% include 'partials/_taskCard.html.twig' with {'task': task } %}
-                    {% endif %}
-                {% endfor %}
+                <div class="col px-4 sortable-col h-100" data-status="{{ status }}">
+                    {% for task in tasks %}
+                        {% if task.currentContent.status === status %}
+                            {% include 'partials/_taskCard.html.twig' with {'task': task } %}
+                        {% endif %}
+                    {% endfor %}
                 </div>
             </div>
         {% endfor %}

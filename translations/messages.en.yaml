@@ -4,6 +4,7 @@ navbar:
     timeline: 'Timeline'
     dashboard: 'Dashboard'
     logout: 'Logout'
+    toggle-theme: 'Theme'
 
 sidebar:
     projects: 'Projects'

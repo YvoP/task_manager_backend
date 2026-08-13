@@ -1,6 +1,14 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" data-bs-theme="dark">
 <head>
+    <script>
+        const theme = localStorage.getItem('theme')
+            ?? (window.matchMedia('(prefers-color-scheme: dark)').matches
+                ? 'dark'
+                : 'light');
+
+        document.documentElement.setAttribute('data-bs-theme', theme);
+    </script>
     <meta charset="UTF-8">
     <title>{% block title %}Welcome!{% endblock %}</title>
     <link rel="icon"
@@ -28,7 +36,7 @@
     {% endif %}
     <div class="col">
         <div class="container-fluid my-3 px-0">
-        {% block body %}{% endblock %}
+            {% block body %}{% endblock %}
         </div>
     </div>
 </div>

@@ -117,6 +117,25 @@ p:empty:not(:focus)::before {
     transform: translateX(0%);
 }
 
-.inside-shadow {
-    box-shadow: inset var(--bs-box-shadow-xs);
+.btn-subtle {
+    --bs-btn-color: var(--bs-body-color);
+    --bs-btn-hover-color: var(--bs-body-color);
+    --bs-btn-hover-bg: var(--bs-secondary);
+    --bs-btn-hover-border-color: var(--bs-secondary);
+    --bs-btn-focus-shadow-rgb: 211, 212, 213;
+
+    --bs-btn-active-color: var(--bs-body-color);
+    --bs-btn-active-bg: var(--bs-secondary);
+    --bs-btn-active-border-color: var(--bs-secondary);
+    &.active {
+        box-shadow: var(--bs-box-shadow);
+    }
+
+    --bs-btn-disabled-color: var(--bs-body-color);
+    --bs-btn-disabled-bg: #f8f9fa;
+    --bs-btn-disabled-border-color: #f8f9fa;
+
+    &:hover {
+        box-shadow: var(--bs-box-shadow);
+    }
 }

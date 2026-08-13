@@ -1,13 +1,4 @@
 :root {
-    --bs-primary: #20CC2C;
-    --bs-secondary: #FFFFFF;
-
-    --bs-body-bg: #fafcff;
-    --bs-body-font-family: Inter;
-    --bs-body-color: #323547;
-
-    --shadow-color-sm: rgb(134 153 182 / 0.20);
-    --shadow-color: rgb(134 153 182 / 0.35);
     --bs-box-shadow-xs: .2rem .2rem 5px 0px var(--shadow-color-sm), 0 0 1px 0px var(--shadow-color-sm);
     --bs-box-shadow-sm: .5rem .5rem 20px 0px var(--shadow-color-sm);
     --bs-box-shadow: .5rem .5rem 20px 0px var(--shadow-color);
@@ -25,9 +16,21 @@
 .btn-primary {
     --bs-btn-bg: var(--bs-primary);
     --bs-btn-border-color: var(--bs-primary);
+
+    --bs-btn-hover-bg: var(--bs-primary-hover);
+    --bs-btn-hover-border-color: var(--bs-primary-hover);
+}
+
+.btn-outline-primary {
+    --bs-btn-color: var(--bs-primary);
+    --bs-btn-border-color: var(--bs-primary);
+
+    --bs-btn-hover-bg: var(--bs-primary-hover);
+    --bs-btn-hover-border-color: var(--bs-primary-hover);
 }
 
 .form-control {
     background-color: var(--bs-secondary);
     border: none;
+    box-shadow: inset var(--bs-box-shadow-xs);
 }

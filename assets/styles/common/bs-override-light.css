@@ -1,0 +1,12 @@
+[data-bs-theme="light"]:root {
+    --bs-primary: #20CC2C;
+    --bs-primary-hover: #14b81f;
+    --bs-secondary: #FFFFFF;
+
+    --bs-body-bg: #fafcff;
+    --bs-body-font-family: Inter;
+    --bs-body-color: #323547;
+
+    --shadow-color-sm: rgb(134 153 182 / 0.20);
+    --shadow-color: rgb(134 153 182 / 0.35);
+}

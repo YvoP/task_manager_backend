@@ -1,0 +1,9 @@
+<li>
+    <a class="btn btn-subtle text-start mb-1 w-100{% if open %} active{% endif %}" href="{{ path('app_project_tasks', {id: userProject.id}) }}">
+        <span class="row align-items-center">
+            <span class="col-4 px-0 py-2 text-center"><i
+                    class="fa-regular fa-folder fa-2xl"></i></span>
+            <span class="col-8 h6 p-0 m-0">{{ userProject.name }}</span>
+        </span>
+    </a>
+</li>

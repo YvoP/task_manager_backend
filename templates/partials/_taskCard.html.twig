@@ -34,7 +34,7 @@
         <div class="collapse collapse{{ task.id }}" id="">
             <div class="card-body">
                 <p class="card-text"
-                   data-placeholder="{{ 'card.empty_description' | trans({}, 'tasks') }}">{{ task.currentContent.description }}</p>
+                   data-placeholder="{{ 'card.empty_description' | trans({}, 'tasks') }}">{{ task.currentContent.description | nl2br }}</p>
                 <div class="row">
                     <div class="col-auto mt-auto">
                         {% if task.currentContent.attributedTo is not null %}

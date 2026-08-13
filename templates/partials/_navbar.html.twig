@@ -8,25 +8,39 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
+            {% if project is defined and project is not null %}
             <ul class="navbar-nav me-auto">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">{{ 'navbar.tasks' | trans }}</a>
+                    <a class="nav-link active fs-5 fw-medium mx-3" aria-current="page"
+                       href="#">{{ 'navbar.tasks' | trans }}</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">{{ 'navbar.meetings' | trans }}</a>
+                    <a class="nav-link fs-5 fw-medium mx-3" href="#">{{ 'navbar.meetings' | trans }}</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">{{ 'navbar.timeline' | trans }}</a>
+                    <a class="nav-link fs-5 fw-medium mx-3" href="{{ path('app_timeline_project', {id: project.id}) }}">{{ 'navbar.timeline' | trans }}</a>
                 </li>
             </ul>
+            {% endif %}
             {% if app.user is null %}
                 Connection
             {% else %}
-                <div class="me-3 dropdown">
-                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#"><img class="img-fluid avatar-md rounded-circle" src="{{ asset(app.user.profileImage) }}" alt=""></a>
+                <label class="me-3 dropdown">
+                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" data-bs-auto-close="outside" href="#"><img
+                            class="img-fluid avatar-md rounded-circle" src="{{ asset(app.user.profileImage) }}" alt=""></a>
                     <ul class="dropdown-menu dropdown-menu-end">
                         <li><a class="dropdown-item" href="#">{{ 'navbar.dashboard' | trans }}</a></li>
-                        <li><a class="dropdown-item" href="{{ path('app_logout') }}">{{ 'navbar.logout' | trans }}</a></li>
+                        <li>
+                            <label for="themeSwitcher" class="dropdown-item-text d-flex align-items-center justify-content-between">
+                                <span>{{ 'navbar.toggle-theme' | trans }}</span>
+                                <label class="switch">
+                                    <input type="checkbox" id="themeSwitcher">
+                                    <span class="slider round"></span>
+                                </label>
+                            </label>
+                        </li>
+                        <li><a class="dropdown-item" href="{{ path('app_logout') }}">{{ 'navbar.logout' | trans }}</a>
+                        </li>
                     </ul>
                 </div>
             {% endif %}

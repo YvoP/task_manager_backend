@@ -1,0 +1,9 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Timeline{% endblock %}
+
+{% block body %}
+    {% for task in tasks %}
+        {{ task.currentContent.title }}
+    {% endfor %}
+{% endblock %}

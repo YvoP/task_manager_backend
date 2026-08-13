@@ -1,38 +1,19 @@
-{% if project is defined and project is not null %}
-    <div class="modal fade" id="addProjectUserModal" tabindex="-1" aria-labelledby="addProjectUserModalLabel"
-         aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="addProjectUserModalLabel">Add a team member to {{ project.name }}</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form name="addTeamMemberForm">
-                        <input type="text" name="username" name="usernameToAdd" placeholder="Username" class="form-control" data-project-id="{{ project.id }}">
-                        <div id="usernameToAddFeedback" class="invalid-feedback">
-                            Please choose a username.
-                        </div>
-                        <div class="mt-4">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ 'button.cancel' | trans }}</button>
-                            <button type="submit" class="btn btn-primary">{{ 'button.confirm' | trans }}</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-{% endif %}
+{% include 'partials/_addProjectUserModal.html.twig' %}
 <div class="d-none d-lg-block col-lg-3 col-xl-2 flex-column shadow-sm z-1">
     <div class="container h-100">
         <div class="row">
             <div class="col pt-4">
                 <p class="h4">{{ 'sidebar.projects' | trans }}</p>
-                <ul>
-                    {% for project in get_projects(user) %}
-                        <li>
-                            <a href="{{ path('app_project_tasks', {id: project.id}) }}">{{ project.name }}</a>
-                        </li>
+                <ul class="list-unstyled">
+                    {% for userProject in get_projects(user) %}
+                        {% if not userProject.isArchived %}
+                            {% if project is defined and project is not null %}
+                                {% set isOpen = userProject == project %}
+                            {% else %}
+                                {% set isOpen = false %}
+                            {% endif %}
+                            {% include 'partials/_projectItem.html.twig' with {'open': isOpen } %}
+                        {% endif %}
                     {% endfor %}
                 </ul>
             </div>
@@ -55,13 +36,22 @@
                     </ul>
                 </div>
             </div>
-            <div class="row vh-100">
-                <div class="col pb-4 mt-auto sticky-bottom">
-                    <a href="#" class="btn btn-outline-secondary" data-bs-toggle="modal"
-                       data-bs-target="#addProjectUserModal">Add a Team Member</a>
-                    <a href="#" class="btn btn-outline-primary">New project</a>
+        {% endif %}
+        <div class="row vh-100">
+            <div class="row mx-auto pb-4 mt-auto sticky-bottom">
+                <div class="btn-group-vertical">
+                    {% if project is defined and project is not null and is_admin(project, user) %}
+                        <div class="btn-group">
+                            <a href="#" class="btn btn-outline-secondary" data-bs-toggle="modal"
+                               data-bs-target="#addProjectUserModal">
+                                <i class="fa-solid fa-user-plus"></i></a>
+                            <a href="{{ path('app_project_edit', {id: project.id}) }}" class="btn btn-outline-warning">
+                                <i class="fa-solid fa-gear"></i></a>
+                        </div>
+                    {% endif %}
+                    <a href="{{ path('app_project_new') }}" class="btn btn-outline-primary">New project</a>
                 </div>
             </div>
-        {% endif %}
+        </div>
     </div>
 </div>

@@ -1,4 +1,5 @@
 import {Sortable} from 'sortablejs';
+import { Modal } from 'bootstrap';
 
 document.querySelectorAll('.sortable-col').forEach(row => {
     Sortable.create(row, {
@@ -35,16 +36,23 @@ document.querySelectorAll('.sortable-col').forEach(row => {
     });
 });
 
+//Modal addProjectUser handling
+
+const modalElement = document.getElementById('addProjectUserModal')
+const addProjectUserModal = Modal.getOrCreateInstance(modalElement);
+
+const addProjectUserFormInput = document.forms["addTeamMemberForm"]["username"];
 document.forms["addTeamMemberForm"].addEventListener("submit", addTeamMember);
+modalElement.addEventListener('shown.bs.modal', () => {
+    addProjectUserFormInput.focus()
+})
 
 function addTeamMember(event) {
     event.preventDefault();
+    const formInputError = document.forms["addTeamMemberForm"].querySelector("#usernameToAddFeedback");
 
-    let formInput = document.forms["addTeamMemberForm"]["username"];
-    let formInputError = document.forms["addTeamMemberForm"].querySelector("#usernameToAddFeedback");
-
-    let projectId = formInput.dataset.projectId;
-    let username = formInput.value;
+    const projectId = addProjectUserFormInput.dataset.projectId;
+    const username = addProjectUserFormInput.value;
 
     if (username === "") {
         return false;
@@ -62,12 +70,13 @@ function addTeamMember(event) {
         }),
     }).then(r => {
         if (r.status === 500) {
-            formInput.classList.remove('is-invalid')
+            addProjectUserFormInput.classList.remove('is-invalid')
             r.json().then(json => { formInputError.innerHTML = json.detail; });
-            formInput.classList.add('is-invalid');
+            addProjectUserFormInput.classList.add('is-invalid');
         }
-        if (r.status === 200) {
-            formInput.value = '';
+        if (r.status === 201) {
+            addProjectUserFormInput.value = '';
+            addProjectUserModal.hide();
         }
     });
 }

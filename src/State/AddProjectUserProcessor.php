@@ -55,9 +55,8 @@ class AddProjectUserProcessor implements ProcessorInterface
             throw new \LogicException('User already in project.');
         }
 
-        $projectUser = $this->service->addUser($project, $userToAdd);
+        $this->service->addUser($project, $userToAdd);
 
-        $this->em->persist($projectUser);
         $this->em->flush();
     }
 }

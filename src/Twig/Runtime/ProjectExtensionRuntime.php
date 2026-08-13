@@ -41,7 +41,12 @@ class ProjectExtensionRuntime implements RuntimeExtensionInterface
 
     public function getUnstartedChats(Project $project, User $user)
     {
-        return $this->projectUserRepository->findUnstartedChats($project->getId(), $user->getId());
+        return $this->projectUserRepository->findUnstartedChats($project, $user);
+    }
+
+    public function isAdmin(Project $project, User $user): bool
+    {
+        return $this->projectUserRepository->isAdmin($project, $user);
     }
 
     public function getTimeDiff(\DateTimeInterface $date): string

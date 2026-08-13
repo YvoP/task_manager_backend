@@ -9,13 +9,44 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class ProjectService
 {
-    function addUser(Project $project, User $user)
+    public function __construct(private readonly EntityManagerInterface $em)
     {
-        $projectUser = new ProjectUser();
-        $projectUser->setProject($project)
-            ->setUser($user)
-            ->setJoinedAt(new \DateTimeImmutable());
+    }
 
-        return $projectUser;
+    function addUser(Project $project, User $user, ?bool $isAdmin = false): bool
+    {
+        try {
+            $projectUser = new ProjectUser();
+            $projectUser->setProject($project)
+                ->setUser($user)
+                ->setJoinedAt(new \DateTimeImmutable());
+
+            if ($isAdmin) {
+                $projectUser->setPermissions(["ROLE_ADMIN"]);
+            }
+
+            $this->em->persist($projectUser);
+
+            return true;
+        }
+        catch (\Exception $e) {
+            return false;
+        }
+    }
+
+    function persistProject(Project $project, ?User $user = null): bool
+    {
+        try {
+            if ($user !== null) {
+                $project->setCreatedAt(new \DateTimeImmutable());
+                $this->addUser($project, $user, true);
+                $this->em->persist($project);
+            }
+            $this->em->flush();
+            return true;
+        }
+        catch (\Exception $e) {
+            return false;
+        }
     }
 }
