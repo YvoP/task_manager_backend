@@ -2,7 +2,9 @@
 
 namespace App\Repository;
 
+use App\Entity\Project;
 use App\Entity\ProjectUser;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -16,28 +18,32 @@ class ProjectUserRepository extends ServiceEntityRepository
         parent::__construct($registry, ProjectUser::class);
     }
 
-    //    /**
-    //     * @return ProjectUser[] Returns an array of ProjectUser objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('p')
-    //            ->andWhere('p.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('p.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
+    public function findUnstartedChats(Project $project, User $user)
+    {
+        return $this->createQueryBuilder('pu')
+            ->leftJoin('pu.chats', 'c')
+            ->andWhere('pu.project = :project')
+            ->andWhere('pu.user != :user')
+            ->andWhere('c.id IS NULL')
+            ->setParameter('project', $project)
+            ->setParameter('user', $user)
+            ->getQuery()
+            ->getResult();
+    }
 
-    //    public function findOneBySomeField($value): ?ProjectUser
-    //    {
-    //        return $this->createQueryBuilder('p')
-    //            ->andWhere('p.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
+    public function isAdmin(Project $project, User $user): bool
+    {
+        $projectUser = $this->createQueryBuilder('pu')
+            ->andWhere('pu.project = :project')
+            ->andWhere('pu.user = :user')
+            ->setParameter('project', $project)
+            ->setParameter('user', $user)
+            ->getQuery()
+            ->getOneOrNullResult();
+
+        return $projectUser !== null
+            && in_array('ROLE_ADMIN', $projectUser->getPermissions(), true);
+    }
+
+
 }

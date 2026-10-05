@@ -1,0 +1,18 @@
+navbar:
+    tasks: 'Tasks'
+    meetings: 'Meetings'
+    timeline: 'Timeline'
+    dashboard: 'Dashboard'
+    logout: 'Logout'
+    toggle-theme: 'Theme'
+
+sidebar:
+    projects: 'Projects'
+    chats: 'Chats'
+
+button:
+    confirm: 'Confirm'
+    cancel: 'Cancel'
+
+alert:
+    error: 'An error happened'

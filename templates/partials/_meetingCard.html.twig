@@ -1,0 +1,60 @@
+<div class="col-3 my-4 text-start sortable-item meeting-card"
+     data-meeting-id="{{ meeting.id }}"
+     data-meeting-status="{{ meeting.status.value }}">
+    <div class="card border-0 shadow">
+        <a class="text-decoration-none text-body" data-bs-toggle="collapse" href=".collapse{{ meeting.id }}" role="button"
+           aria-expanded="false"
+           aria-controls="collapse{{ meeting.id }}">
+            <div class="card-header border-0">
+                <div class="row">
+                    <div class="d-flex justify-content-between">
+                        <div class="me-auto">
+                            <p class="fs-4 fw-medium my-2 meeting-name">{{ meeting.name }}</p>
+                        </div>
+
+                        <div class="align-content-center ms-auto">
+                            <i data-bs-toggle="closed" class="fa-solid fa-caret-down fa-2xl"></i>
+                            <i data-bs-toggle="open" class="fa-solid fa-caret-up fa-2xl"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+        <div class="collapse collapse{{ meeting.id }}" id="">
+            <div class="card-body">
+                <p class="card-text meeting-summary"
+                   data-placeholder="{{ 'card.empty_description' | trans({}, 'tasks') }}">{{ meeting.summary | nl2br }}</p>
+                <div class="row">
+                    <div class="col meeting-actions">
+                    {% if not meeting.activeProcess %}
+                        {% if not meeting.transcript %}
+                            <form
+                                method="post"
+                                action="{{ path('app_meetings_transcribe', { id: meeting.id }) }}">
+                                <button type="submit" class="btn btn-primary">Transcribe</button>
+                            </form>
+                        {% elseif not meeting.summary %}
+                            <form
+                                method="post"
+                                action="{{ path('app_meetings_transcribe', { id: meeting.id }) }}">
+                                <button type="submit" class="btn btn-warning">Analyze</button>
+                            </form>
+                        {% endif %}
+                        {% if meeting.activeProcess == constant('App\\Enum\\Process::TRANSCRIBING') %}
+                            <p class="fw-bold text-secondary meeting-status">Transcription in progress</p>
+                        {% elseif meeting.status == constant('App\\Enum\\Process::EXTRACTING_TASKS') %}
+                            <p class="fw-bold text-secondary meeting-status">Analysis in progress</p>
+                        {% endif %}
+                    {% endif %}
+                    </div>
+                    <div class="col d-flex flex-column align-items-end justify-content-end">
+                        <p class="mb-0 fs-7">
+                            <a class="text-decoration-none" href="{{ path('app_meetings_details', {id: project.id, meetingId: meeting.id}) }}">{{ 'button.details' | trans({}, 'tasks') }}</a>
+                        </p>
+                        <p class="mb-0 fs-7 fw-light">{{ meeting.recordedAt | format_date }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

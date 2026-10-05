@@ -19,11 +19,11 @@ class ProjectUser
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column]
+    #[ORM\ManyToOne(inversedBy: 'projectUsers')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
 
-    #[ORM\Column]
+    #[ORM\ManyToOne(inversedBy: 'projectUsers')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Project $project = null;
 
@@ -47,7 +47,7 @@ class ProjectUser
     /**
      * @var Collection<int, Meeting>
      */
-    #[ORM\ManyToMany(targetEntity: Meeting::class, mappedBy: 'users')]
+    #[ORM\ManyToMany(targetEntity: Meeting::class, mappedBy: 'projectUsers')]
     private Collection $attendedMeetings;
 
     /**

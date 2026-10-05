@@ -2,13 +2,50 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Link;
+use ApiPlatform\Metadata\Patch;
+use ApiPlatform\Metadata\Post;
+use App\Dto\AnalyzeMeetingInputDto;
+use App\Dto\TranscriptionInputDto;
+use App\Enum\Process;
+use App\Enum\Status;
 use App\Repository\MeetingRepository;
+use App\State\AnalyzeMeetingProvider;
+use App\State\TranscriptionProcessor;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: MeetingRepository::class)]
+#[ApiResource(
+    operations: [
+        new Get(),
+        new GetCollection(),
+        new Patch(),
+        new Post(
+            uriTemplate: '/meetings/{craigId}/transcription',
+            uriVariables: [
+                'craigId' => new Link(
+                    parameterName: 'craigId',
+                    fromClass: Meeting::class,
+                    identifiers: ['craigId'],
+                ),
+            ],
+            input: TranscriptionInputDto::class,
+            read: false,
+            processor: TranscriptionProcessor::class,
+        ),
+        new Get(
+            uriTemplate: '/meetings/{id}/analyze',
+            provider: AnalyzeMeetingProvider::class,
+        ),
+    ],
+    mercure: true
+)]
 class Meeting
 {
     #[ORM\Id]
@@ -19,8 +56,8 @@ class Meeting
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[ORM\Column(type: Types::TEXT, nullable: true)]
-    private ?string $transcript = null;
+    #[ORM\Column(type: Types::JSON, nullable: true)]
+    private ?array $transcript = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $summary = null;
@@ -41,7 +78,7 @@ class Meeting
     private Collection $tasks;
 
     #[ORM\ManyToOne(inversedBy: 'meetings')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true)]
     private ?Project $project = null;
 
     /**
@@ -50,10 +87,27 @@ class Meeting
     #[ORM\ManyToMany(targetEntity: ProjectUser::class, inversedBy: 'attendedMeetings')]
     private Collection $projectUsers;
 
+    #[ORM\Column(length: 255, unique: true, nullable: true)]
+    private ?string $craigId = null;
+
+    #[ORM\Column]
+    private ?\DateTimeImmutable $recordedAt = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $craigKey = null;
+
+    #[ORM\Column(enumType: Status::class)]
+    private Status $status = Status::PENDING;
+
+    #[ORM\Column(nullable: true, enumType: Process::class)]
+    private ?Process $activeProcess = null;
+
     public function __construct()
     {
         $this->tasks = new ArrayCollection();
         $this->projectUsers = new ArrayCollection();
+
+        $this->createdAt = new \DateTimeImmutable();
     }
 
     public function getId(): ?int
@@ -73,12 +127,12 @@ class Meeting
         return $this;
     }
 
-    public function getTranscript(): ?string
+    public function getTranscript(): ?array
     {
         return $this->transcript;
     }
 
-    public function setTranscript(?string $transcript): static
+    public function setTranscript(?array $transcript): static
     {
         $this->transcript = $transcript;
 
@@ -195,6 +249,66 @@ class Meeting
     public function removeProjectUser(ProjectUser $projectUser): static
     {
         $this->projectUsers->removeElement($projectUser);
+
+        return $this;
+    }
+
+    public function getCraigId(): ?string
+    {
+        return $this->craigId;
+    }
+
+    public function setCraigId(?string $craigId): static
+    {
+        $this->craigId = $craigId;
+
+        return $this;
+    }
+
+    public function getRecordedAt(): ?\DateTimeImmutable
+    {
+        return $this->recordedAt;
+    }
+
+    public function setRecordedAt(\DateTimeImmutable $recordedAt): static
+    {
+        $this->recordedAt = $recordedAt;
+
+        return $this;
+    }
+
+    public function getCraigKey(): ?string
+    {
+        return $this->craigKey;
+    }
+
+    public function setCraigKey(?string $craigKey): static
+    {
+        $this->craigKey = $craigKey;
+
+        return $this;
+    }
+
+    public function getStatus(): ?Status
+    {
+        return $this->status;
+    }
+
+    public function setStatus(Status $status): static
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
+    public function getActiveProcess(): ?Process
+    {
+        return $this->activeProcess;
+    }
+
+    public function setActiveProcess(?Process $activeProcess): static
+    {
+        $this->activeProcess = $activeProcess;
 
         return $this;
     }

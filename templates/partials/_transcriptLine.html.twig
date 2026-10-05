@@ -1,0 +1,7 @@
+<div class="row hoverable rounded-2 p-2 segment a-slide-in" data-start="{{ transcriptLine.start }}" data-end="{{ transcriptLine.end }}">
+    <p class="col-auto text-body fw-bold mb-0"> {{ transcriptLine.user }}</p>
+    <p class="col-auto text-secondary mb-0 fw-light fs-7 my-auto">{{ transcriptLine.start | audio_time }}</p>
+    <div class="row">
+        <p class="col-auto text-body mb-0">{{ transcriptLine.text }}</p>
+    </div>
+</div>

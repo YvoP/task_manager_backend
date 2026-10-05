@@ -1,0 +1,14 @@
+navbar:
+    tasks: 'Tâches'
+    meetings: 'Réunions'
+    timeline: 'Chronologie'
+    dashboard: 'Panneau de configuration'
+    logout: 'Se déconnecter'
+    toggle-theme: 'Thème'
+
+sidebar:
+    projects: 'Projets'
+    chats: 'Conversations'
+
+button:
+    confirm: 'Valider'

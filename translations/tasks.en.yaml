@@ -1,0 +1,41 @@
+status:
+    TODO: 'Todo'
+    IN_PROGRESS: 'In Progress'
+    DONE: 'Done'
+
+card:
+    priority:
+        0: 'Low priority'
+        1: 'Medium priority'
+        2: 'High priority'
+        3: 'Critical priority'
+    empty_description: 'There is no description to this task'
+
+relative_date:
+    days_later: 'in %count% days'
+    months_later: 'in %count% months'
+    years_later: 'in %count% years'
+    day_later: 'in %count% day'
+    month_later: 'in %count% month'
+    year_later: 'in %count% year'
+    days_ago: '%count% days ago'
+    months_ago: '%count% months ago'
+    years_ago: '%count% years ago'
+    day_ago: '%count% day ago'
+    month_ago: '%count% month ago'
+    year_ago: '%count% year ago'
+    today: "today"
+
+button:
+  new_task: 'New task'
+  history: 'History'
+  edit: 'Edit'
+  details: 'See details'
+
+alert:
+    updated: 'Task successfully updated'
+    created: 'Task successfully created'
+
+title:
+    edit: 'Task edition form'
+    add: 'Task creation form'

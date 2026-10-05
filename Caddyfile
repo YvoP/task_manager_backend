@@ -1,4 +1,7 @@
 https://localhost:8443 {
+    handle /.well-known/mercure* {
+        reverse_proxy mercure:80
+    }
     tls internal
     root * /var/www/html/public
     file_server

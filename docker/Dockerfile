@@ -53,7 +53,7 @@ USER ${USER_ID}:${GROUP_ID}
 ######
 # DEV STAGE NODE
 ######
-FROM node:22 AS node-dev
+FROM node:26 AS node-dev
 
 ARG USER_ID=1000
 ARG GROUP_ID=1000
@@ -67,7 +67,7 @@ RUN /user_entry_point.sh ${USER_ID} ${GROUP_ID}
 #switch to the good user
 USER ${USER_ID}:${GROUP_ID}
 
-FROM node:22 AS node
+FROM node:26 AS node
 
 WORKDIR /app
 
