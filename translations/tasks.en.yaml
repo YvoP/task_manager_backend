@@ -27,9 +27,10 @@ relative_date:
     today: "today"
 
 button:
-    new_task: 'New task'
-    history: 'History'
-    edit: 'Edit'
+  new_task: 'New task'
+  history: 'History'
+  edit: 'Edit'
+  details: 'See details'
 
 alert:
     updated: 'Task successfully updated'

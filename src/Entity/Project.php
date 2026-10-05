@@ -15,10 +15,11 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ApiResource(
-    operations: [new GetCollection(
+    operations: [
+        new GetCollection(
         uriTemplate: '/users/{id}/projects',
         provider: UserProjectsProvider::class,
-    ),
+        ),
         new Post(
             uriTemplate: '/project/{id}/user',
             input: AddProjectUserDto::class,

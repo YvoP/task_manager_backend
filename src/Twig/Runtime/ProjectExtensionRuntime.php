@@ -67,4 +67,12 @@ class ProjectExtensionRuntime implements RuntimeExtensionInterface
 
         return $this->translator->trans('relative_date.today', [], 'tasks');
     }
+
+    public function formatAudioTime(float $seconds): string
+    {
+        $minutes = floor($seconds / 60);
+        $seconds = floor($seconds % 60);
+
+        return sprintf('%02d:%02d', $minutes, $seconds);
+    }
 }

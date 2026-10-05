@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    {{ encore_entry_script_tags('meetingListener') }}
+{% endblock %}
+
+{% block title %}Meeting List for {{ project.name }}{% endblock %}
+
+{% block body %}
+    <div class="row">
+        {% for meeting in meetings %}
+            {% include 'partials/_meetingCard.html.twig' with {'meeting': meeting } %}
+        {% endfor %}
+    </div>
+{% endblock %}

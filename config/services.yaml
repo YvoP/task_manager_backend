@@ -23,5 +23,21 @@ services:
             - '../src/Entity/'
             - '../src/Kernel.php'
 
+    App\Service\CraigService:
+        arguments:
+            $craigUrl: '%env(CRAIG_URL)%'
+    App\Service\OllamaService:
+        arguments:
+            $ollamaUrl: '%env(OLLAMA_URL)%'
+            $modelName: '%env(MODEL_NAME)%'
+    App\Service\MeetingTranscriberService:
+        arguments:
+            $transcriberUrl: '%env(TRANSCRIBER_URL)%'
+    App\EventListener\CanonicalRequestContextListener:
+        arguments:
+            $baseUrl: '%env(MERCURE_PUBLIC_URL)%'
+        tags:
+            - { name: kernel.event_listener, event: kernel.request, priority: 0 }
+
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones

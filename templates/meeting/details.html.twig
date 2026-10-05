@@ -1,0 +1,84 @@
+{% extends 'base.html.twig' %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    {{ encore_entry_script_tags('meetingListener') }}
+{% endblock %}
+
+{% block title %}Meeting {{ meeting.name }}{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-9">
+            <div class="container meeting-details" data-meeting-id="{{ meeting.id }}">
+                <p class="h1 meeting-name">{{ meeting.name }}</p>
+                <div class="row">
+                    <p class="col-auto text-secondary"><i
+                            class="fa-regular fa-calendar"></i> {{ meeting.recordedAt | format_date }}</p>
+                    <p class="col-auto text-secondary"><i class="fa-regular fa-clock"></i> {{ meeting.duration/60 }} min
+                    </p>
+
+                    <div class="meeting-audio">
+                        {% if meeting.audio %}
+                            <audio id="player" controls preload="metadata">
+                                <source src="/build/audios/{{ meeting.audio }}" type="audio/mp3">
+                            </audio>
+                        {% endif %}
+                    </div>
+                </div>
+                <p class="h3 mb-3">Transcription</p>
+                <div class="meeting-transcription overflow-x-hidden">
+                    {% for transcriptLine in meeting.transcript %}
+                        {% include 'partials/_transcriptLine.html.twig' with {'transcriptLine': transcriptLine } %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <p class="h3">Summary</p>
+                        {% if meeting.summary %}
+                            <p class="meeting-summary">{{ meeting.summary }}</p>
+                        {% endif %}
+                    </div>
+                    <div class="col-12">
+                        <p class="h3">Decided Tasks</p>
+                        {% if meeting.tasks %}
+                            {% for task in meeting.tasks %}
+                                {% include 'partials/_taskCard.html.twig' with {'task': task } %}
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        const audio = document.getElementById('player');
+        const segments = [...document.querySelectorAll('.segment')];
+
+        segments.forEach(segment => {
+            segment.addEventListener('click', () => {
+                audio.currentTime = Number(segment.dataset.start);
+                audio.play();
+            });
+        });
+
+        audio.addEventListener('timeupdate', () => {
+            const time = audio.currentTime;
+
+            segments.forEach(segment => {
+                const start = Number(segment.dataset.start);
+                const end = Number(segment.dataset.end);
+
+                segment.classList.toggle(
+                    'bg-primary',
+                    time >= start && time < end
+                );
+            });
+        });
+    </script>
+{% endblock %}

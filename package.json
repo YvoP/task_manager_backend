@@ -25,6 +25,7 @@
         "@fortawesome/fontawesome-free": "^7.3.0",
         "bootstrap": "^5.3.8",
         "sortablejs": "^1.15.7",
+        "vis-data": "^8.0.5",
         "vis-timeline": "^8.5.4"
     }
 }

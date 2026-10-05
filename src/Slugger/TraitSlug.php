@@ -8,7 +8,6 @@ use Symfony\Component\Serializer\Annotation\Groups;
 trait TraitSlug
 {
     #[ORM\Column(type: 'string')]
-    #[Groups(['generated_menu_recipe'])]
     private ?string $slug;
 
     public function getSlug(): ?string

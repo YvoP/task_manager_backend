@@ -30,3 +30,4 @@ button:
     new_task: 'Nouvelle tâche'
     history: 'Historique'
     edit: 'Éditer'
+    details: 'Voir les détails'

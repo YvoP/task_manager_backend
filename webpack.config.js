@@ -21,6 +21,8 @@ Encore
      * and one CSS file (e.g. app.css) if your JavaScript imports CSS.
      */
     .addEntry('scripts', './assets/scripts/app.js')
+    .addEntry('timeline', './assets/scripts/taskTimeline.js')
+    .addEntry('meetingListener', './assets/scripts/meetingListener.js')
     .addEntry('styles', './assets/styles/app.css')
 
     .copyFiles({
@@ -30,6 +32,10 @@ Encore
     .copyFiles({
         from: './assets/fonts',
         to: 'fonts/[path][name].[ext]'
+    })
+    .copyFiles({
+        from: './assets/audios',
+        to: 'audios/[path][name].[ext]'
     })
 
     // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.

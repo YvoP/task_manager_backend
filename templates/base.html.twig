@@ -30,7 +30,7 @@
 </head>
 <body class="d-flex flex-column min-vh-100">
 {% include 'partials/_navbar.html.twig' %}
-<div class="row flex-grow-1 d-flex">
+<div class="row mx-0 flex-grow-1">
     {% if user | default %}
         {% include 'partials/_sidebar.html.twig' %}
     {% endif %}

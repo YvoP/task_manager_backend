@@ -1,9 +1,14 @@
 {% extends 'base.html.twig' %}
 
+{% block javascripts %}
+    {{ parent() }}
+
+    {{ encore_entry_script_tags('timeline') }}
+{% endblock %}
+
 {% block title %}Timeline{% endblock %}
 
 {% block body %}
-    {% for task in tasks %}
-        {{ task.currentContent.title }}
-    {% endfor %}
+    <div id="visualization"
+         data-tasks="{{ tasks|json_encode|e('html_attr') }}"></div>
 {% endblock %}

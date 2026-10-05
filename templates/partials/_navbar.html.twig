@@ -12,10 +12,10 @@
             <ul class="navbar-nav me-auto">
                 <li class="nav-item">
                     <a class="nav-link active fs-5 fw-medium mx-3" aria-current="page"
-                       href="#">{{ 'navbar.tasks' | trans }}</a>
+                       href="{{ path('app_project_tasks', {id: project.id}) }}">{{ 'navbar.tasks' | trans }}</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link fs-5 fw-medium mx-3" href="#">{{ 'navbar.meetings' | trans }}</a>
+                    <a class="nav-link fs-5 fw-medium mx-3" href="{{ path('app_meetings_index', {id: project.id}) }}">{{ 'navbar.meetings' | trans }}</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link fs-5 fw-medium mx-3" href="{{ path('app_timeline_project', {id: project.id}) }}">{{ 'navbar.timeline' | trans }}</a>

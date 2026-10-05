@@ -1,7 +1,7 @@
 {% include 'partials/_addProjectUserModal.html.twig' %}
-<div class="d-none d-lg-block col-lg-3 col-xl-2 flex-column shadow-sm z-1">
-    <div class="container h-100">
-        <div class="row">
+<div class="d-none d-lg-flex col-lg-3 col-xl-2 flex-column shadow-sm z-1">
+    <div class="container d-flex flex-column h-100">
+        <div class="">
             <div class="col pt-4">
                 <p class="h4">{{ 'sidebar.projects' | trans }}</p>
                 <ul class="list-unstyled">
@@ -19,7 +19,7 @@
             </div>
         </div>
         {% if project is defined and project is not null %}
-            <div class="row">
+            <div class="">
                 <div class="col pt-4">
                     <p class="h4">{{ 'sidebar.chats' | trans }}</p>
                     <ul>
@@ -37,8 +37,8 @@
                 </div>
             </div>
         {% endif %}
-        <div class="row vh-100">
-            <div class="row mx-auto pb-4 mt-auto sticky-bottom">
+        <div class="mt-auto sticky-bottom">
+            <div class="row mx-auto mb-3">
                 <div class="btn-group-vertical">
                     {% if project is defined and project is not null and is_admin(project, user) %}
                         <div class="btn-group">

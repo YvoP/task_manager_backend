@@ -16,6 +16,7 @@ class ProjectExtension extends AbstractExtension
             // parameter: ['is_safe' => ['html']]
             // Reference: https://twig.symfony.com/doc/3.x/advanced.html#automatic-escaping
             new TwigFilter('time_diff', [ProjectExtensionRuntime::class, 'getTimeDiff']),
+            new TwigFilter('audio_time', [ProjectExtensionRuntime::class, 'formatAudioTime']),
         ];
     }
 

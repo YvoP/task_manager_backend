@@ -4,8 +4,50 @@ services:
       context: .
       dockerfile: docker/Dockerfile
       target: dev
+    environment:
+      MERCURE_URL: ${MERCURE_URL}
+      MERCURE_PUBLIC_URL: ${MERCURE_PUBLIC_URL}
+      MERCURE_JWT_SECRET: ${MERCURE_JWT_SECRET}
     volumes:
       - ./:/var/www/html
+    networks:
+      - default
+      - api-network
+
+  worker:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+      target: dev
+    environment:
+      MERCURE_URL: ${MERCURE_URL}
+      MERCURE_PUBLIC_URL: ${MERCURE_PUBLIC_URL}
+      MERCURE_JWT_SECRET: ${MERCURE_JWT_SECRET}
+    volumes:
+      - ./:/var/www/html
+    command: php bin/console messenger:consume async scheduler_meetings_sync --time-limit=1800
+    restart: unless-stopped
+    depends_on:
+      - db
+    networks:
+      - default
+      - api-network
+
+  mercure:
+    image: dunglas/mercure
+    restart: unless-stopped
+    environment:
+      SERVER_NAME: ':80'
+      MERCURE_TRUSTED_ISSUERS: 'task-manager'
+      MERCURE_PUBLISHER_JWT_KEY: '${MERCURE_JWT_SECRET}'
+      MERCURE_SUBSCRIBER_JWT_KEY: '${MERCURE_JWT_SECRET}'
+      MERCURE_EXTRA_DIRECTIVES: |
+        resource_identifier https://localhost:8443/.well-known/mercure
+        cors_origins https://localhost:8443
+        anonymous
+    volumes:
+      - mercure_data:/data
+      - mercure_config:/config
 
   caddy:
     build:
@@ -14,7 +56,8 @@ services:
     cap_add:
       - NET_ADMIN
     ports:
-      - 8443:8443
+      - "8443:8443"
+      - "8444:8000"
     volumes:
       - ./:/var/www/html
       - caddy_back_data:/data
@@ -22,8 +65,8 @@ services:
     depends_on:
       - php
     networks:
-      - default
       - api-network
+      - default
 
   node:
     image: node:26
@@ -64,6 +107,8 @@ volumes:
   mariadb:
   caddy_back_data:
   caddy_back_config:
+  mercure_data:
+  mercure_config:
 
 networks:
   api-network:

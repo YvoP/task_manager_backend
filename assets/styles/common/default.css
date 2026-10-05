@@ -139,3 +139,31 @@ p:empty:not(:focus)::before {
         box-shadow: var(--bs-box-shadow);
     }
 }
+
+.vis-timeline .no-start-date {
+    color: white;
+    background-color: red;
+    border-color: darkred;
+}
+
+.hoverable:hover {
+    background-color: var(--bs-secondary);
+}
+
+.a-slide-in {
+    animation: slide-in 0.3s ease-out forwards;
+    animation-delay: calc(sibling-index() * 25ms);
+    opacity: 0;
+}
+
+@keyframes slide-in {
+    from {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
